@@ -447,18 +447,6 @@ body::after {
   line-height: 1.5;
 }
 
-@supports (font-size: clamp( 0.625rem , -0.0416666667rem  +  3.3333333333vw , 0.6875rem )) {
-  .header__top {
-    font-size: clamp( 0.625rem , -0.0416666667rem  +  3.3333333333vw , 0.6875rem );
-  }
-}
-
-@supports not (font-size: clamp( 0.625rem , -0.0416666667rem  +  3.3333333333vw , 0.6875rem )) {
-  .header__top {
-    font-size: calc(0.625rem + 0.0625 * (100vw - 20rem) / 1.875);
-  }
-}
-
 .top-header {
   padding: 0.8125rem 0;
 }
@@ -992,14 +980,6 @@ body::after {
   .footer-top__button {
     min-height: calc(2.375rem + 0.75 * (100vw - 48rem) / 41.375);
   }
-}
-
-.spollers {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
 }
 
 .spollers__item {
@@ -2457,12 +2437,25 @@ button.swiper-pagination-bullet {
 }
 
 @media (min-width: 49.375rem) {
-  .spollers__item {
-    max-width: 18.75rem;
+  .spollers {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
   }
 
-  .spollers__item:not(:last-child) {
-    margin-right: 80px;
+  .spollers__item {
+    -webkit-box-flex: 0;
+        -ms-flex: 0 1 33.333%;
+            flex: 0 1 33.333%;
+  }
+
+  .spollers__item:nth-child(4),
+  .spollers__item:nth-child(5) {
+    -webkit-box-flex: 0;
+        -ms-flex: 0 1 50%;
+            flex: 0 1 50%;
   }
 
   .spollers__item:not(:last-child) {
@@ -2517,6 +2510,21 @@ button.swiper-pagination-bullet {
 
   .page__shop {
     min-height: 31.25rem;
+  }
+}
+
+@media (min-width: 82.5rem) {
+  .spollers__item {
+    -webkit-box-flex: 0;
+        -ms-flex: 0 1 20%;
+            flex: 0 1 20%;
+  }
+
+  .spollers__item:nth-child(4),
+  .spollers__item:nth-child(5) {
+    -webkit-box-flex: 0;
+        -ms-flex: 0 1 20%;
+            flex: 0 1 20%;
   }
 }
 
@@ -2718,10 +2726,6 @@ button.swiper-pagination-bullet {
 }
 
 @media (max-width: 49.375rem) {
-  .spollers {
-    display: block;
-  }
-
   .spollers__title {
     font-size: 0.6875rem;
     color: #e5ecf1;
@@ -2918,6 +2922,10 @@ button.swiper-pagination-bullet {
     -webkit-transform: scale(0.65);
         -ms-transform: scale(0.65);
             transform: scale(0.65);
+  }
+
+  .header__top {
+    font-size: 0.625rem;
   }
 
   .top-header__timing span:after {
