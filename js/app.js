@@ -3648,6 +3648,11 @@
             }));
         }
     }), 0);
+    const iconSearch = document.querySelector("#icon-search");
+    const blockImages = iconSearch.closest(".bottom-header__container");
+    if (iconSearch) iconSearch.addEventListener("click", (function(e) {
+        if (blockImages) blockImages.classList.toggle("_active");
+    }));
     window["FLS"] = true;
     isWebp();
     menuInit();
