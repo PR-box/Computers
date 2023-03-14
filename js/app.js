@@ -82,44 +82,6 @@
     let _slideToggle = (target, duration = 500) => {
         if (target.hidden) return _slideDown(target, duration); else return _slideUp(target, duration);
     };
-    let bodyLockStatus = true;
-    let bodyLockToggle = (delay = 500) => {
-        if (document.documentElement.classList.contains("lock")) bodyUnlock(delay); else bodyLock(delay);
-    };
-    let bodyUnlock = (delay = 500) => {
-        let body = document.querySelector("body");
-        if (bodyLockStatus) {
-            let lock_padding = document.querySelectorAll("[data-lp]");
-            setTimeout((() => {
-                for (let index = 0; index < lock_padding.length; index++) {
-                    const el = lock_padding[index];
-                    el.style.paddingRight = "0px";
-                }
-                body.style.paddingRight = "0px";
-                document.documentElement.classList.remove("lock");
-            }), delay);
-            bodyLockStatus = false;
-            setTimeout((function() {
-                bodyLockStatus = true;
-            }), delay);
-        }
-    };
-    let bodyLock = (delay = 500) => {
-        let body = document.querySelector("body");
-        if (bodyLockStatus) {
-            let lock_padding = document.querySelectorAll("[data-lp]");
-            for (let index = 0; index < lock_padding.length; index++) {
-                const el = lock_padding[index];
-                el.style.paddingRight = window.innerWidth - document.querySelector(".wrapper").offsetWidth + "px";
-            }
-            body.style.paddingRight = window.innerWidth - document.querySelector(".wrapper").offsetWidth + "px";
-            document.documentElement.classList.add("lock");
-            bodyLockStatus = false;
-            setTimeout((function() {
-                bodyLockStatus = true;
-            }), delay);
-        }
-    };
     function spollers() {
         const spollersArray = document.querySelectorAll("[data-spollers]");
         if (spollersArray.length > 0) {
@@ -197,14 +159,6 @@
                 }));
             }));
         }
-    }
-    function menuInit() {
-        if (document.querySelector(".icon-menu")) document.addEventListener("click", (function(e) {
-            if (bodyLockStatus && e.target.closest(".icon-menu")) {
-                bodyLockToggle();
-                document.documentElement.classList.toggle("menu-open");
-            }
-        }));
     }
     function uniqArray(array) {
         return array.filter((function(item, index, self) {
@@ -3648,13 +3602,27 @@
             }));
         }
     }), 0);
-    const iconSearch = document.querySelector("#icon-search");
-    const blockImages = iconSearch.closest(".bottom-header__container");
-    if (iconSearch) iconSearch.addEventListener("click", (function(e) {
-        if (blockImages) blockImages.classList.toggle("_active");
+    const bottomHeader = document.querySelector(".bottom-header__container");
+    document.addEventListener("click", (function(e) {
+        const targetElement = e.target;
+        if (!targetElement.closest(".form")) bottomHeader.classList.remove("_active");
+        if (targetElement.closest("#icon-search")) bottomHeader.classList.toggle("_active");
+    }));
+    document.addEventListener("keyup", (function(e) {
+        if ("Escape" === e.code) bottomHeader.classList.remove("_active");
+    }));
+    const menu = document.querySelector(".menu");
+    document.querySelector(".menu__body");
+    document.querySelector(".menu__link");
+    document.addEventListener("click", (function(e) {
+        const targetElement = e.target;
+        if (!targetElement.closest(".icon-menu")) menu.classList.remove("menu-open");
+        if (targetElement.closest(".icon-menu")) menu.classList.toggle("menu-open");
+    }));
+    document.addEventListener("keyup", (function(e) {
+        if ("Escape" === e.code) menu.classList.remove("menu-open");
     }));
     window["FLS"] = true;
     isWebp();
-    menuInit();
     spollers();
 })();
